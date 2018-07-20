@@ -1,0 +1,1 @@
+# smava-automation
