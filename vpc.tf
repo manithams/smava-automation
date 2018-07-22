@@ -64,6 +64,41 @@ resource "aws_route_table" "smava-private-rtb" {
 }
 
 
+resource "aws_route_table_association" "smava-rtb-az1-asc-1" {
+  subnet_id = "${aws_subnet.smava-az1-subnets.*.id[0]}"
+  route_table_id = "${aws_route_table.smava-public-rtb.id}"
+}
+
+resource "aws_route_table_association" "smava-rtb-az1-asc-2" {
+  subnet_id = "${aws_subnet.smava-az1-subnets.*.id[1]}"
+  route_table_id = "${aws_route_table.smava-private-rtb.id}"
+}
+
+resource "aws_route_table_association" "smava-rtb-az2-asc-1" {
+  subnet_id = "${aws_subnet.smava-az2-subnets.*.id[0]}"
+  route_table_id = "${aws_route_table.smava-public-rtb.id}"
+}
+
+resource "aws_route_table_association" "smava-rtb-az2-asc-2" {
+  subnet_id = "${aws_subnet.smava-az2-subnets.*.id[1]}"
+  route_table_id = "${aws_route_table.smava-private-rtb.id}"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
