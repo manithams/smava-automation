@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::520447751155:role/smava-eks-minion-iam-role
+      username: system:node:{{EC2PrivateDNSName}}
+        - system:bootstrappers
+        - system:nodes+

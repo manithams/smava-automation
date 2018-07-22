@@ -12,6 +12,9 @@ variable "account_owner" {
   default = "520447751155"
 }
 
+variable "profilename" {
+  default = "smava"
+}
 
 
 

@@ -25,9 +25,12 @@ resource "aws_security_group" "smava-eks-minion-sg" {
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-    tags {
-      Name = "smava-eks-minion-sg"
-    }
+    tags "${
+      map(
+        "Name", "smava-eks-minion-sg"
+        "kubernetes.io/cluster/${var.cluster-name}", "owned",
+        )
+    }"
 }
 
 resource "aws_security_group_rule" "smava-eks-master-sg-ingress-ws" {
@@ -41,7 +44,7 @@ resource "aws_security_group_rule" "smava-eks-master-sg-ingress-ws" {
 }
 
 resource "aws_security_group_rule" "smava-eks-master-sg-ingress-node-https" {
-  description = "Allow local workstations to communicate with the cluster API Server"
+  description = "Allow minions to communicate with the cluster API Server"
   from_port =  443
   protocol = "tcp"
   security_group_id = "${aws_security_group.smava-eks-master-sg.id}"
@@ -64,7 +67,7 @@ resource "aws_security_group_rule" "smava-eks-minion-sg-ingress-self" {
 
 resource "aws_security_group_rule" "smava-eks-minion-sg-ingress-cluster" {
   description = "Allow worker Kubelets and pods to receive communication from the cluster control plane"
-  from_port = 1025
+  from_port = 0
   protocol = "tcp"
   security_group_id = "${aws_security_group.smava-eks-minion-sg.id}"
   source_security_group_id = "${aws_security_group.smava-eks-minion-sg.id}"

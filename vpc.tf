@@ -35,7 +35,7 @@ resource "aws_subnet" "smava-az2-subnets" {
   vpc_id = "${aws_vpc.smava-vpc.id}"
   tags = "${
     map(
-      "Name", "smava-subnet-${data.aws_availability_zones.available.names[2]}-${count.index}",
+      "Name", "smava-subnet-${data.aws_availability_zones.available.names[2]}-${count.index+3}",
       "kubernetes.io/cluster/${var.cluster-name}", "shared",
       )
   }"
