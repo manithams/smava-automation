@@ -14,7 +14,7 @@ In the past the deployment process of the company consisted of a lot of manual s
 Smava-cyborg comes to play as a [terraform](https://www.terraform.io/intro/index.html) module which will deploy an [EKS](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html) cluster on us-east-1 region, making use of two availability zones for the worker nodes.
 Upon successful cluster creation, this will also deploy a [jenkins](https://jenkins.io/doc/) server with two preloaded jobs for building a simple hello-world application.
 
-# Architecture.
-## VPC for EKS 
+# What Smava-Cyborg does?
+#### VPC for EKS 
 Creating a VPC for the Amazon EKS cluster with two public subnets and two private subnets, which are provided with internet access through a NAT gateway.
 
