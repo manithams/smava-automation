@@ -11,14 +11,14 @@ resource "aws_vpc" "smava-vpc" {
 
 resource "aws_subnet" "smava-az1-subnets" {
   count = 2
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone = "${data.aws_availability_zones.available.names[1]}"
   cidr_block = "10.0.${count.index+1}.0/24"
   vpc_id = "${aws_vpc.smava-vpc.id}"
 }
 
 resource "aws_subnet" "smava-az2-subnets" {
   count = 2
-  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  availability_zone = "${data.aws_availability_zones.available.names[2]}"
   cidr_block = "10.0.${count.index+3}.0/24"
   vpc_id = "${aws_vpc.smava-vpc.id}"
 }
