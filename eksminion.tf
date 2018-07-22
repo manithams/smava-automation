@@ -1,7 +1,7 @@
 data "aws_ami" "eks-worker" {
   filter {
     name   = "name"
-        values = ["eks-worker-*"]
+    values = ["eks-worker-*"]
    }
 
    most_recent = true
@@ -54,15 +54,20 @@ resource "aws_autoscaling_group" "smava-eks-minion-asg" {
   max_size = 2
   min_size = 1
   name = "smava-eks-minion-asg"
-  vpc_zone_identifier = ["${aws_subnet.smava-az1-subnets.*.id[0]}", "${aws_subnet.smava-az2-subnets.*.id[0]}"]
+  vpc_zone_identifier = ["${aws_subnet.smava-az1-subnets.*.id[1]}", "${aws_subnet.smava-az2-subnets.*.id[1]}"]
   tag {
     key = "Name"
     value = "smava-eks-minion"
     propagate_at_launch = true
     }
+  tag {
+    key = "kubernetes.io/cluster/${var.cluster-name}"
+    value = "owned"
+    propagate_at_launch = true
+  }
 }
 
-
+i
 
 
 
