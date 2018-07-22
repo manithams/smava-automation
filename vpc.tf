@@ -5,21 +5,37 @@ variable "cluster-name" {
 
 data "aws_availability_zones" "available" {}
 
-resource "aws_vpc" "smava-eks-vpc" {
-  cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "smava-vpc" {
+  cidr_block = "20.0.0.0/16"
   }
 
 resource "aws_subnet" "smava-az1-subnets" {
   count = 2
   availability_zone = "${data.aws_availability_zones.available.names[0]}"
-  cidr_block = "10.0.${count.index}.0/24"
-  vpc_id = "${aws_vpc.smava-eks-vpc.id}"
+  cidr_block = "20.0.${count.index}.0/24"
+  vpc_id = "${aws_vpc.smava-vpc.id}"
 }
 
 resource "aws_subnet" "smava-az2-subnets" {
   count = 2
   availability_zone = "${data.aws_availability_zones.available.names[1]}"
-  cidr_block = "10.0.${count.index}.0/24"
-  vpc_id = "${aws_vpc.smava-eks-vpc.id}"
+  cidr_block = "20.0.${count.index}.0/24"
+  vpc_id = "${aws_vpc.smava-vpc.id}"
 }
 
+resource "aws_internet_gateway" "smava-igw" {
+  vpc_id = "${aws_vpc.smava-vpc.id}"
+  tags {
+    Name = "smava-igw"
+  }
+}
+
+resource "aws_eip" "smava-ngw-eip" {}
+
+resource "aws_nat_gateway" "smava-ngw" {
+  allocation_id = "${aws_eip.smava-ngw-eip.id}"
+  subnet_id     = "${aws_subnet.smava-az1-subnets.*.id[0]}"
+  tags {
+  Name = "smava-ngw"
+  }
+}
