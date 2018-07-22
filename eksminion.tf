@@ -67,7 +67,7 @@ resource "aws_autoscaling_group" "smava-eks-minion-asg" {
   }
 }
 
-i
+
 
 
 
