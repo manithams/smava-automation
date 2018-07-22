@@ -31,7 +31,7 @@ resource "aws_security_group" "smava-eks-minion-sg" {
 }
 
 resource "aws_security_group_rule" "smava-eks-master-sg-ingress-ws" {
-  cidr_blocks = ["0.0.0.0/32"]
+  cidr_blocks = ["0.0.0.0/0"]
   description = "Allow local workstations to communicate with the cluster API Server"
   from_port =  443
   protocol = "tcp"
