@@ -1,2 +1,4 @@
 *tfstate*
 .terraform/*
+smava-kubeconfig
+config-map-aws-auth.yaml

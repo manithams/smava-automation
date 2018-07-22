@@ -7,6 +7,12 @@ data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "smava-vpc" {
   cidr_block = "10.0.0.0/16"
+  tags = "${
+    map(
+      "Name","smava-vpc",
+      "kubernetes.io/cluster/${var.cluster-name}", "shared",
+      )
+    }"
   }
 
 resource "aws_subnet" "smava-az1-subnets" {
@@ -14,6 +20,12 @@ resource "aws_subnet" "smava-az1-subnets" {
   availability_zone = "${data.aws_availability_zones.available.names[1]}"
   cidr_block = "10.0.${count.index+1}.0/24"
   vpc_id = "${aws_vpc.smava-vpc.id}"
+  tags = "${
+    map(
+      "Name", "smava-subnet-${data.aws_availability_zones.available.names[1]}-${count.index}",
+      "kubernetes.io/cluster/${var.cluster-name}", "shared",
+      )
+  }"
 }
 
 resource "aws_subnet" "smava-az2-subnets" {
@@ -21,6 +33,12 @@ resource "aws_subnet" "smava-az2-subnets" {
   availability_zone = "${data.aws_availability_zones.available.names[2]}"
   cidr_block = "10.0.${count.index+3}.0/24"
   vpc_id = "${aws_vpc.smava-vpc.id}"
+  tags = "${
+    map(
+      "Name", "smava-subnet-${data.aws_availability_zones.available.names[2]}-${count.index}",
+      "kubernetes.io/cluster/${var.cluster-name}", "shared",
+      )
+  }"
 }
 
 resource "aws_internet_gateway" "smava-igw" {
