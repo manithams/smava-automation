@@ -43,6 +43,9 @@ users:
         - "token"
         - "-i"
         - "${var.cluster-name}"
+      env:
+        - name: AWS_PROFILE
+          value: "${var.profilename}"
 KUBECONFIG
 }
 
@@ -50,14 +53,22 @@ output "smava-kubeconfig" {
   value = "${local.kubeconfig}"
 }
 
-resource "null_resource" "forprovisioner" {
+resource "null_resource" "client-configs" {
   provisioner "local-exec" {
-      command = "terraform output smava-kubeconfig > smava-kubeconfig"
-      } 
+    command = "mkdir -p ./files && terraform output jobbatical-kubeconfig > files/jobbatical-kubeconfig"
+  }
   provisioner "local-exec" {
-      command = "terraform output config-map-aws-auth > config-map-aws-auth.yaml"
-      }
+    command = "mkdir -p ./files && terraform output config-map-aws-auth > files/config-map-aws-auth.yaml"
+  }
+  depends_on = [
+    "aws_eks_cluster.smava-eks-cluster",
+    "aws_autoscaling_group.smava-eks-minion-asg",
+    ]
 }
+
+
+
+
 
 
 
