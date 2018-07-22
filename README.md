@@ -16,5 +16,5 @@ Upon successful cluster creation, this will also deploy a [jenkins](https://jenk
 
 # Architecture.
 ## VPC for EKS 
-creating a VPC for the Amazon EKS cluster with two public subnets and two private subnets, which are provided with internet access through a NAT gateway.
+Creating a VPC for the Amazon EKS cluster with two public subnets and two private subnets, which are provided with internet access through a NAT gateway.
 
