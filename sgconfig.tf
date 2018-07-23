@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "smava-eks-minion-sg-ingress-cluster" {
   from_port = 0
   protocol = "tcp"
   security_group_id = "${aws_security_group.smava-eks-minion-sg.id}"
-  source_security_group_id = "${aws_security_group.smava-eks-minion-sg.id}"
+  source_security_group_id = "${aws_security_group.smava-eks-master-sg.id}"
   to_port = 65535
   type = "ingress"
 }
