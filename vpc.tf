@@ -1,7 +1,7 @@
 variable "cluster-name" {
   default = "smava-eks-cluster"
   type = "string"
-  }
+}
 
 data "aws_availability_zones" "available" {}
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "smava-az1-subnets" {
   vpc_id = "${aws_vpc.smava-vpc.id}"
   tags = "${
     map(
-      "Name", "smava-subnet-${data.aws_availability_zones.available.names[1]}-${count.index}",
+      "Name", "smava-subnet-${data.aws_availability_zones.available.names[1]}-${count.index+1}",
       "kubernetes.io/cluster/${var.cluster-name}", "shared",
       )
   }"

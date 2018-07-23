@@ -25,9 +25,9 @@ resource "aws_security_group" "smava-eks-minion-sg" {
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-    tags "${
+    tags  = "${
       map(
-        "Name", "smava-eks-minion-sg"
+        "Name", "smava-eks-minion-sg",
         "kubernetes.io/cluster/${var.cluster-name}", "owned",
         )
     }"

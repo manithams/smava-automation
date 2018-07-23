@@ -1,5 +1,7 @@
 locals {
   config-map-aws-auth = <<CONFIGMAPAWSAUTH
+
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -9,8 +11,10 @@ data:
   mapRoles: |
     - rolearn: ${aws_iam_role.smava-eks-minion-iam-role.arn}
       username: system:node:{{EC2PrivateDNSName}}
+      groups:
         - system:bootstrappers
-        - system:nodes+CONFIGMAPAWSAUTH
+        - system:nodes
+CONFIGMAPAWSAUTH
 }
 
 output "config-map-aws-auth" {
@@ -19,6 +23,8 @@ output "config-map-aws-auth" {
 
 locals {
   kubeconfig = <<KUBECONFIG
+
+
 apiVersion: v1
 clusters:
 - cluster:
@@ -27,8 +33,8 @@ clusters:
   name: kubernetes
 contexts:
 - context:
-     cluster: kubernetes
-     user: aws
+    cluster: kubernetes
+    user: aws
   name: aws
 current-context: aws
 kind: Config
@@ -55,7 +61,7 @@ output "smava-kubeconfig" {
 
 resource "null_resource" "client-configs" {
   provisioner "local-exec" {
-    command = "mkdir -p ./files && terraform output jobbatical-kubeconfig > files/jobbatical-kubeconfig"
+    command = "mkdir -p ./files && terraform output smava-kubeconfig > files/smava-kubeconfig"
   }
   provisioner "local-exec" {
     command = "mkdir -p ./files && terraform output config-map-aws-auth > files/config-map-aws-auth.yaml"
