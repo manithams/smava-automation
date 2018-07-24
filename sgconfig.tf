@@ -75,7 +75,40 @@ resource "aws_security_group_rule" "smava-eks-minion-sg-ingress-cluster" {
   type = "ingress"
 }
 
+resource "aws_security_group" "smava-jenkins-sg" {
+  name = "smava-jenkins-sg"
+  description = "Allow access to jenkins and access between jenkins to eks"
+  vpc_id = "${aws_vpc.smava-vpc.id}"
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags{
+    Name = "smava-jenkins-sg"
+  }
+}
 
+resource "aws_security_group_rule" "smava-jenkins-sg-ingress-ws" {
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "Allow local workstations to communicate with jenkins server"
+  from_port = 22
+  protocol = "tcp"
+  security_group_id = "${aws_security_group.smava-jenkins-sg.id}"
+  to_port =22 
+  type = "ingress"
+}
+
+resource "aws_security_group_rule" "smava-jenkins-sg-ingress-public" {
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "Allow access to jenkins server UI"
+  from_port = 8080
+  protocol = "tcp"
+  security_group_id = "${aws_security_group.smava-jenkins-sg.id}"
+  to_port = 8080
+  type = "ingress"
+}
 
 
 
