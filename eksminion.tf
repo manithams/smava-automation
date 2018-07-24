@@ -44,6 +44,7 @@ resource "aws_launch_configuration" "smava-eks-minion-lc" {
   name_prefix = "smava-eks-minion-lc"
   security_groups = ["${aws_security_group.smava-eks-minion-sg.id}"]
   user_data_base64 = "${base64encode(local.smava-eks-minion-userdata)}"
+  key_name = "${aws_key_pair.smava-key.key_name}"
 
 lifecycle {
   create_before_destroy = true

@@ -16,5 +16,6 @@ variable "profilename" {
   default = "smava"
 }
 
+variable "smava_key_file" {}
 
 

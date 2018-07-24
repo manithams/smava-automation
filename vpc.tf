@@ -18,11 +18,11 @@ resource "aws_vpc" "smava-vpc" {
 resource "aws_subnet" "smava-az1-subnets" {
   count = 2
   availability_zone = "${data.aws_availability_zones.available.names[1]}"
-  cidr_block = "10.0.${count.index+1}.0/24"
+  cidr_block = "10.0.${count.index}.0/24"
   vpc_id = "${aws_vpc.smava-vpc.id}"
   tags = "${
     map(
-      "Name", "smava-subnet-${data.aws_availability_zones.available.names[1]}-${count.index+1}",
+      "Name", "smava-subnet-${data.aws_availability_zones.available.names[1]}-${count.index}",
       "kubernetes.io/cluster/${var.cluster-name}", "shared",
       )
   }"
@@ -31,11 +31,11 @@ resource "aws_subnet" "smava-az1-subnets" {
 resource "aws_subnet" "smava-az2-subnets" {
   count = 2
   availability_zone = "${data.aws_availability_zones.available.names[2]}"
-  cidr_block = "10.0.${count.index+3}.0/24"
+  cidr_block = "10.0.${count.index+2}.0/24"
   vpc_id = "${aws_vpc.smava-vpc.id}"
   tags = "${
     map(
-      "Name", "smava-subnet-${data.aws_availability_zones.available.names[2]}-${count.index+3}",
+      "Name", "smava-subnet-${data.aws_availability_zones.available.names[2]}-${count.index+2}",
       "kubernetes.io/cluster/${var.cluster-name}", "shared",
       )
   }"

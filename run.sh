@@ -7,7 +7,7 @@ $(which aws) configure set aws_secret_access_key "$AWS_SECRET_KEY" --profile "$A
 
 
 terraform init
-terraform apply -auto-approve -var "access_key=$AWS_ACCESS_KEY" -var "secret_key=$AWS_SECRET_KEY" -var "profilename=$AWS_PROFILE_NAME";
+terraform apply -auto-approve -var "access_key=$AWS_ACCESS_KEY" -var "secret_key=$AWS_SECRET_KEY" -var "smava_key_file=$deployer_key_file" -var "profilename=$AWS_PROFILE_NAME";
 
 #terraform output  smava-kubeconfig > smava-kubeconfig
 #terraform output config-map-aws-auth > config-map-aws-auth.yaml

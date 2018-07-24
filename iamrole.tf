@@ -35,7 +35,7 @@ resource "aws_iam_role" "smava-eks-minion-iam-role" {
       {
         "Effect":"Allow",
         "Principal": {
-         "Service": "eks.amazonaws.com"
+         "Service": "ec2.amazonaws.com"
          },
            "Action": "sts:AssumeRole"
       }
@@ -66,7 +66,10 @@ resource "aws_iam_instance_profile" "smava-eks-minion-profile" {
   role = "${aws_iam_role.smava-eks-minion-iam-role.name}"
 }
 
-
+resource "aws_key_pair" "smava-key" {
+  key_name = "smava-key"
+  public_key = "${file(var.smava_key_file)}"
+}
 
 
 
