@@ -19,5 +19,5 @@ variable "profilename" {
 variable "smava_key_file" {}
 
 variable "jenkins_ami" {
-  default = "ami-f135388e"
+  default = "ami-b7d1dcc8"
 }
