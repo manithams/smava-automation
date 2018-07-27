@@ -32,7 +32,7 @@ resource "aws_instance" "smava-jenkins-server" {
   ]
 
   provisioner "file" {
-    source = ".kube/smava-kubeconfig-v1"
+    source = "files/smava-kubeconfig-v1"
     destination = "/tmp/smava-kubeconfig-v1"
   }
   provisioner "file" {
@@ -55,6 +55,7 @@ resource "aws_instance" "smava-jenkins-server" {
       "chmod +x /tmp/configure-awscli.sh",
       "cp /home/ubuntu/.aws/credentials /tmp/credentials",
       "chmod +rx /tmp/credentials",
+      "sed -i '1,2d' /tmp/smava-kubeconfig"
     ]
   }
     

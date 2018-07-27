@@ -23,5 +23,5 @@ variable "smava_key_file" {}
 variable "smava_pvt_key_file" {}
 
 variable "jenkins_ami" {
-  default = "ami-086c6477"
+  default = "ami-3bc6ce44"
 }
