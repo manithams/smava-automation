@@ -48,7 +48,7 @@ resource "aws_instance" "smava-jenkins-server" {
   provisioner "remote-exec" {
     inline = [
       "mkdir -p ~/.kube",
-      "cp /tmp/smava-kubeconfig-v1 ~/.kube/ ",
+      "cp /tmp/smava-kubeconfig ~/.kube/ ",
       "echo 'export KUBECONFIG=~/.kube/smava-kubeconfig' >> ~/.bashrc",
       "echo ${aws_ecr_repository.smava-ecr.repository_url} > ~/dockerregistry",
       "sed -i '2,3d' /tmp/configure-awscli.sh",
