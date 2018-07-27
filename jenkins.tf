@@ -1,3 +1,13 @@
+data "template_file" "configure-awscli" {
+  template = "${file("./scripts/configure-awscli.tpl")}"
+  vars {
+    accesskey   = "${var.access_key}"
+    secretkey   = "${var.secret_key}"
+    profilename = "${var.profilename}"
+    region      = "${var.region}"
+  }
+}
+
 resource "aws_instance" "smava-jenkins-server" {
   ami = "${var.jenkins_ami.}"
   instance_type = "t2.micro"
@@ -20,17 +30,31 @@ resource "aws_instance" "smava-jenkins-server" {
     "aws_eks_cluster.smava-eks-cluster",
     "null_resource.client-configs"
   ]
+
   provisioner "file" {
-    source = "files/smava-kubeconfig"
-    destination = "/tmp/smava-kubeconfig"
+    source = ".kube/smava-kubeconfig-v1"
+    destination = "/tmp/smava-kubeconfig-v1"
   }
+  provisioner "file" {
+    source = "files/config-map-aws-auth-v1.yaml"
+    destination = "/tmp/config-map-aws-auth-v1.yaml"
+  }
+
+  provisioner "file" {
+    content = "${data.template_file.configure-awscli.rendered}"
+    destination = "/tmp/configure-awscli.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "sed -i '1,2d' /tmp/smava-kubeconfig",
       "mkdir -p ~/.kube",
-      "mv /tmp/smava-kubeconfig ~/.kube/ ",
+      "cp /tmp/smava-kubeconfig-v1 ~/.kube/ ",
       "echo 'export KUBECONFIG=~/.kube/smava-kubeconfig' >> ~/.bashrc",
       "echo ${aws_ecr_repository.smava-ecr.repository_url} > ~/dockerregistry",
+      "sed -i '2,3d' /tmp/configure-awscli.sh",
+      "chmod +x /tmp/configure-awscli.sh",
+      "cp /home/ubuntu/.aws/credentials /tmp/credentials",
+      "chmod +rx /tmp/credentials",
     ]
   }
     

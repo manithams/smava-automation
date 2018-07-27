@@ -18,4 +18,4 @@ sed '1,2d' $(pwd)/files/config-map-aws-auth.yaml > $(pwd)/files/config-map-aws-a
 KUBECONFIG=$(pwd)"/.kube/smava-kubeconfig-v1" kubectl apply -f files/config-map-aws-auth-v1.yaml
 export KUBECONFIG=/root/smava-automation/.kube/smava-kubeconfig-v1
 #kubectl apply -f config-map-aws-auth.yaml
-
+kubectl apply -f files/config-map-aws-auth-v1.yaml
