@@ -32,8 +32,8 @@ resource "aws_instance" "smava-jenkins-server" {
   ]
 
   provisioner "file" {
-    source = "files/smava-kubeconfig-v1"
-    destination = "/tmp/smava-kubeconfig-v1"
+    source = "files/smava-kubeconfig"
+    destination = "/tmp/smava-kubeconfig"
   }
   provisioner "file" {
     source = "files/config-map-aws-auth-v1.yaml"
