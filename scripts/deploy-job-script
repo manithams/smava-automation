@@ -1,0 +1,14 @@
+export KUBECONFIG=/tmp/smava-kubeconfig
+kubectl apply -f /tmp/config-map-aws-auth-v1.yaml
+kubectl get nodes
+
+kubectl create namespace $NAMESPACE || true
+        
+export DOCKER_REGISTRY=$(cat /home/ubuntu/dockerregistry)
+
+sed -i "s#IMAGEANDTAG#$DOCKER_REGISTRY:$IMAGETAG#" /tmp/smava-helloworld-deployment.yaml
+cat /tmp/smava-helloworld-deployment.yaml
+
+kubectl delete deployments smava-helloworld -n smava || true
+
+kubectl apply -f /tmp/smava-helloworld-deployment.yaml -n smava

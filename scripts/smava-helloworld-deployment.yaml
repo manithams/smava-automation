@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: smava-helloworld
+    labels:
+      app: smava-helloworld
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: smava-helloworld
+  template:
+    metadata:
+      labels:
+        app: smava-helloworld
+    spec:
+      containers:
+      - name: smava-helloworld
+        image: IMAGEANDTAG
+        ports:
+        - containerPort: 8080
+                    

@@ -1,0 +1,28 @@
+aws_access_key_id=$( cat /tmp/credentials | grep aws_access_key_id | awk '{print $3}')
+aws_secret_access_key=$( cat /tmp/credentials | grep aws_secret_access_key | awk '{print $3}')
+
+
+
+export DOCKER_REGISTRY=$(cat /home/ubuntu/dockerregistry)
+
+
+aws configure set aws_access_key_id "$aws_access_key_id" --profile "$PROFILE"
+aws configure set aws_secret_access_key "$aws_secret_access_key" --profile "$PROFILE"
+ls -al
+
+echo "FROM $DOCKER_REGISTRY:8-jdk" > Dockerfile
+echo "COPY helloworld.war /app/" >> Dockerfile
+echo "WORKDIR /app/" >> Dockerfilels
+echo "CMD java -jar /app/helloworld.war" >> Dockerfile
+echo "EXPOSE 8080" >> Dockerfile
+
+
+aws ecr get-login --no-include-email --region $REGION
+
+eval $(aws ecr get-login --no-include-email --region $REGION| sed 's|https://||')
+
+docker build -t smava-ecr:$TAG .
+
+docker tag smava-ecr $DOCKER_REGISTRY:$TAG
+
+docker push $DOCKER_REGISTRY:$TAG

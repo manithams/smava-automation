@@ -19,5 +19,5 @@ KUBECONFIG=$(pwd)"/.kube/smava-kubeconfig-v1" kubectl apply -f files/config-map-
 export KUBECONFIG=/root/smava-automation/.kube/smava-kubeconfig-v1
 #kubectl apply -f config-map-aws-auth.yaml
 kubectl apply -f files/config-map-aws-auth-v1.yaml
-kubectl apply --force --validate=false -f ./scripts/smava-helloworld-service.yaml -n smava
-kubectl get svc -n smava
+#kubectl apply --force --validate=false -f ./scripts/smava-helloworld-service.yaml -n smava
+#kubectl get svc -n smava
