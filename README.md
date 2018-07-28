@@ -33,7 +33,7 @@ Please make sure following tools are installed/configured before trying this.
 More information on how to Install:
 * Install kubectl and heptio-authenticator-aws is listed [here](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
 * Install [Terraform](https://www.terraform.io/intro/getting-started/install.html)
-* Install [aws-cli] (ttps://docs.aws.amazon.com/cli/latest/userguide/awscli-install-linux.html#awscli-install-linux-pip)
+* Install [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/awscli-install-linux.html#awscli-install-linux-pip)
 
 # How to setup
 
