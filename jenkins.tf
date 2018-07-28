@@ -36,7 +36,7 @@ resource "aws_instance" "smava-jenkins-server" {
     destination = "/tmp/smava-kubeconfig"
   }
   provisioner "file" {
-    source = "files/config-map-aws-auth-v1.yaml"
+    source = "files/config-map-aws-auth.yaml"
     destination = "/tmp/config-map-aws-auth-v1.yaml"
   }
 
@@ -64,4 +64,13 @@ resource "aws_instance" "smava-jenkins-server" {
 output "jenkins-address" {
   value = "${aws_instance.smava-jenkins-server.public_ip}"
 }
+
+output "jenkins-username" {
+  value = "admin"
+  }
+
+output "jenkins-password" {
+  value = "smava@123"
+}
+
 
