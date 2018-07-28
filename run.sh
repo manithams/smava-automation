@@ -16,7 +16,7 @@ mkdir -p ./.kube && cp files/smava-kubeconfig ./.kube/
 sed '1,2d' $(pwd)/.kube/smava-kubeconfig > $(pwd)/.kube/smava-kubeconfig-v1
 sed '1,2d' $(pwd)/files/config-map-aws-auth.yaml > $(pwd)/files/config-map-aws-auth-v1.yaml
 KUBECONFIG=$(pwd)"/.kube/smava-kubeconfig-v1" kubectl apply -f files/config-map-aws-auth-v1.yaml
-export KUBECONFIG=/root/smava-automation/.kube/smava-kubeconfig-v1
+export KUBECONFIG=$(pwd)"/.kube/smava-kubeconfig-v1"
 #kubectl apply -f config-map-aws-auth.yaml
 kubectl apply -f files/config-map-aws-auth-v1.yaml
 #kubectl apply --force --validate=false -f ./scripts/smava-helloworld-service.yaml -n smava
