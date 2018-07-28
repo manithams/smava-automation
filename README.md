@@ -61,7 +61,7 @@ More information on how to Install:
      smava-ecr-url = <uri of created ECR>
     ```
  6. Login to the Jenkins server via a browser. (Use default jenkins server port)
-      username and password for the jenkins server will be shared seperately.
+      *Username and password for the jenkins server can be found in the Output.*
     ```
      http://<Jenkins-server-IP-address>:8080
     ```
