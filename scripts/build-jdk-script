@@ -16,7 +16,7 @@ aws ecr get-login --no-include-email --region $REGION
 
 eval $(aws ecr get-login --no-include-email --region $REGION| sed 's|https://||')
 
-docker build -t manithajdk8:$TAG .
+
 
 docker tag manithajdk8:$TAG $DOCKER_REGISTRY:$TAG
 
